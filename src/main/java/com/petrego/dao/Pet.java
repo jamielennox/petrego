@@ -1,5 +1,6 @@
 package com.petrego.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.petrego.domain.PetType;
 
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "pet")
-public final class Pet {
+public class Pet {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;
@@ -47,45 +48,46 @@ public final class Pet {
     private Date createdDate;
 
     @ManyToMany(mappedBy = "pets")
+    @JsonBackReference
     private Set<Owner> owners = new HashSet<>();
 
-    public Long getId() {
+    public final Long getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public final void setId(final Long id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(final String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public PetType getPetType() {
+    public final PetType getPetType() {
         return petType;
     }
 
-    public void setPetType(final PetType petType) {
+    public final void setPetType(final PetType petType) {
         this.petType = petType;
     }
 
-    public Date getCreatedDate() {
+    public final Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(final Date createdDate) {
+    public final void setCreatedDate(final Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Set<Owner> getOwners() {
+    public final Set<Owner> getOwners() {
         return owners;
     }
 
-    public void setOwners(final Set<Owner> owners) {
+    public final void setOwners(final Set<Owner> owners) {
         this.owners = owners;
     }
 }

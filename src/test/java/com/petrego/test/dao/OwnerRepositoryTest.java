@@ -1,6 +1,7 @@
-package com.petrego.dao;
+package com.petrego.test.dao;
 
-import com.petrego.JpaTestBase;
+import com.petrego.dao.Owner;
+import com.petrego.dao.OwnerRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,7 +43,7 @@ public class OwnerRepositoryTest extends JpaTestBase {
         ownerRepository.saveAndFlush(owner);
 
         // Then owner is persisted to db
-        Owner persistedOwner = ownerRepository.findById(owner.getId()).get();
+        Owner persistedOwner = ownerRepository.findById(owner.getOwnerId()).get();
         assertNotNull(persistedOwner);
     }
 }

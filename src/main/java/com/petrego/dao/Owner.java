@@ -1,5 +1,7 @@
 package com.petrego.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "owner")
-public final class Owner {
+public class Owner {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;
@@ -31,7 +33,7 @@ public final class Owner {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    private Long ownerId;
 
     @Column(name = "name", nullable = false)
     @Size(min = MIN_LENGTH, max = MAX_LENGTH, message = "Owner name must be between 3 and 255 characters long.")
@@ -46,37 +48,38 @@ public final class Owner {
     @JoinTable(name = "owner_pet",
             joinColumns = { @JoinColumn(name = "owner_id") },
             inverseJoinColumns = { @JoinColumn(name = "pet_id") })
+    @JsonManagedReference
     private Set<Pet> pets = new HashSet<>();
 
-    public Long getId() {
-        return id;
+    public final Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setId(final Long id) {
-        this.id = id;
+    public final void setOwnerId(final Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(final String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public Date getCreatedDate() {
+    public final Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(final Date createdDate) {
+    public final void setCreatedDate(final Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Set<Pet> getPets() {
+    public final Set<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(final Set<Pet> pets) {
+    public final void setPets(final Set<Pet> pets) {
         this.pets = pets;
     }
 
@@ -85,7 +88,7 @@ public final class Owner {
      * @param petName
      * @return Optional pet details.
      */
-    public Optional<Pet> getPetByName(final String petName) {
+    public final Optional<Pet> getPetByName(final String petName) {
         return pets.stream().filter(p -> p.getName().equals(petName)).findAny();
     }
 }
