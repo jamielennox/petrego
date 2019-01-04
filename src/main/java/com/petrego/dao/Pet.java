@@ -2,6 +2,7 @@ package com.petrego.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.petrego.domain.PetType;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "pet")
-public class Pet {
+public class Pet extends ResourceSupport {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;
@@ -31,7 +32,7 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    private Long petId;
 
     @Column(name = "name", nullable = false)
     @Size(min = MIN_LENGTH, max = MAX_LENGTH, message = "Owner name must be between 3 and 255 characters long.")
@@ -51,12 +52,12 @@ public class Pet {
     @JsonBackReference
     private Set<Owner> owners = new HashSet<>();
 
-    public final Long getId() {
-        return id;
+    public final Long getPetId() {
+        return petId;
     }
 
-    public final void setId(final Long id) {
-        this.id = id;
+    public final void setPetId(final Long id) {
+        this.petId = id;
     }
 
     public final String getName() {

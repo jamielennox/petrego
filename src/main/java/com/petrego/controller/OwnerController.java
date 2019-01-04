@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 public class OwnerController {
 
@@ -29,9 +32,11 @@ public class OwnerController {
      * @return Owner details in JSON
      */
     @GetMapping(value = "/v1/owners/{ownerId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> getOwner(final @PathVariable long ownerId) {
+    public ResponseEntity<?> getOwnerPets(final @PathVariable long ownerId) {
         try {
             Owner owner = ownerControllerService.getOwner(ownerId);
+            owner.add(linkTo(methodOn(this.getClass()).getOwnerPets(ownerId)).withSelfRel());
+
             return ResponseEntity.status(MessageCode.OK.getCode()).body(owner);
         } catch (PetRegoException exception) {
             return ResponseEntity.status(exception.getMessageCode().getCode())

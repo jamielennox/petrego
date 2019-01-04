@@ -28,7 +28,7 @@ public class PetRepositoryTest extends JpaTestBase {
         petRepository.save(pet);
 
         // Then pet information should be persisted
-        Pet persistedPet = petRepository.findById(pet.getId()).get();
+        Pet persistedPet = petRepository.findById(pet.getPetId()).get();
         assertNotNull(persistedPet);
     }
 }
