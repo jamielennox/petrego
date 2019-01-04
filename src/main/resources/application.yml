@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
   h2:
     console:
       enabled: true
@@ -15,5 +15,4 @@ spring:
     enabled: true
     change-log: classpath:/liquibase/db.changelog-master.xml
     check-change-log-location: true
-    contexts: local
     drop-first: true
