@@ -1,29 +1,28 @@
-package com.petrego.petrego.dao;
+package com.petrego.dao;
 
-import javax.persistence.CascadeType;
+import com.petrego.domain.PetType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "owner")
-public final class Owner {
+@Table(name = "pet")
+public final class Pet {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;
@@ -38,15 +37,17 @@ public final class Owner {
     @NotNull
     private String name;
 
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private PetType petType;
+
     @Column(name = "created_date", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "owner_pet",
-            joinColumns = { @JoinColumn(name = "owner_id") },
-            inverseJoinColumns = { @JoinColumn(name = "pet_id") })
-    private Set<Pet> pets = new HashSet<>();
+    @ManyToMany(mappedBy = "pets")
+    private Set<Owner> owners = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -64,6 +65,14 @@ public final class Owner {
         this.name = name;
     }
 
+    public PetType getPetType() {
+        return petType;
+    }
+
+    public void setPetType(final PetType petType) {
+        this.petType = petType;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -72,20 +81,11 @@ public final class Owner {
         this.createdDate = createdDate;
     }
 
-    public Set<Pet> getPets() {
-        return pets;
+    public Set<Owner> getOwners() {
+        return owners;
     }
 
-    public void setPets(final Set<Pet> pets) {
-        this.pets = pets;
-    }
-
-    /**
-     * Get pet by name if exists.
-     * @param petName
-     * @return Optional pet details.
-     */
-    public Optional<Pet> getPetByName(String petName) {
-        return pets.stream().filter(p -> p.getName().equals(petName)).findAny();
+    public void setOwners(final Set<Owner> owners) {
+        this.owners = owners;
     }
 }

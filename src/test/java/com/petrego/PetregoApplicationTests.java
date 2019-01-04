@@ -1,4 +1,4 @@
-package com.petrego.petrego;
+package com.petrego;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

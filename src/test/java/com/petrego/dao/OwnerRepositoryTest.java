@@ -1,6 +1,6 @@
-package com.petrego.petrego.dao;
+package com.petrego.dao;
 
-import com.petrego.petrego.JpaTestBase;
+import com.petrego.JpaTestBase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

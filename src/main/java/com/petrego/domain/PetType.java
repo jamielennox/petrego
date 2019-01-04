@@ -1,4 +1,4 @@
-package com.petrego.petrego.domain;
+package com.petrego.domain;
 
 public enum PetType {
     dog, cat, chicken, snake
