@@ -1,6 +1,8 @@
 package com.petrego.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.petrego.domain.PetFood;
 import com.petrego.domain.PetType;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -14,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -43,6 +46,10 @@ public class Pet extends ResourceSupport {
     @Enumerated(EnumType.STRING)
     @NotNull
     private PetType petType;
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String food;
 
     @Column(name = "created_date", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -90,5 +97,13 @@ public class Pet extends ResourceSupport {
 
     public final void setOwners(final Set<Owner> owners) {
         this.owners = owners;
+    }
+
+    public final String getFood() {
+        return food;
+    }
+
+    public final void setFood(final PetFood food) {
+        this.food = food.getFood();
     }
 }
