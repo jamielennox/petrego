@@ -8,6 +8,7 @@ import com.petrego.domain.PetFood;
 import com.petrego.domain.PetRegoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,11 +40,12 @@ public class OwnerController {
     public ResponseEntity<?> getOwnerPets(final @PathVariable long ownerId) {
         try {
             Owner owner = ownerControllerService.getOwner(ownerId);
-            owner.add(linkTo(methodOn(this.getClass()).getOwnerPets(ownerId)).withSelfRel());
+            Resource<Owner> ownerResource = new Resource<>(owner);
+            ownerResource.add(linkTo(methodOn(this.getClass()).getOwnerPets(ownerId)).withSelfRel());
 
             // TODO Add PetController with GET so that Owner response can contain HATEOAS link for each Pet.
 
-            return ResponseEntity.status(MessageCode.OK.getCode()).body(owner);
+            return ResponseEntity.status(MessageCode.OK.getCode()).body(ownerResource);
         } catch (PetRegoException exception) {
             return ResponseEntity.status(exception.getMessageCode().getCode())
                     .body(exception.getMessage());
@@ -63,13 +65,14 @@ public class OwnerController {
     public ResponseEntity<?> getOwnerPetsWithFood(final @PathVariable long ownerId) {
         try {
             Owner owner = ownerControllerService.getOwner(ownerId);
-            owner.add(linkTo(methodOn(this.getClass()).getOwnerPetsWithFood(ownerId)).withSelfRel());
+            Resource<Owner> ownerResource = new Resource<>(owner);
+            ownerResource.add(linkTo(methodOn(this.getClass()).getOwnerPetsWithFood(ownerId)).withSelfRel());
 
             for (Pet pet : owner.getPets()) {
                 pet.setFood(PetFood.valueOf(pet.getPetType().toString()));
             }
 
-            return ResponseEntity.status(MessageCode.OK.getCode()).body(owner);
+            return ResponseEntity.status(MessageCode.OK.getCode()).body(ownerResource);
         } catch (PetRegoException exception) {
             return ResponseEntity.status(exception.getMessageCode().getCode())
                     .body(exception.getMessage());

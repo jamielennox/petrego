@@ -1,7 +1,6 @@
 package com.petrego.dao;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "owner")
-public class Owner extends ResourceSupport {
+public class Owner {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.petrego.domain.PetFood;
 import com.petrego.domain.PetType;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "pet")
-public class Pet extends ResourceSupport {
+public class Pet {
 
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 255;

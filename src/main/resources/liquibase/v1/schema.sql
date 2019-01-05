@@ -33,6 +33,11 @@ INSERT INTO owner(name) VALUES('Jane Doe');
 
 INSERT INTO pet(name, type) VALUES('Rocky', 'dog');
 INSERT INTO pet(name, type) VALUES('Penny', 'chicken');
+INSERT INTO pet(name, type) VALUES('Silvester', 'cat');
+INSERT INTO pet(name, type) VALUES('Slither', 'snake');
 
+INSERT INTO owner_pet(owner_id, pet_id) VALUES(1,1);
 INSERT INTO owner_pet(owner_id, pet_id) VALUES(1,2);
+INSERT INTO owner_pet(owner_id, pet_id) VALUES(1,3);
 INSERT INTO owner_pet(owner_id, pet_id) VALUES(2,1);
+INSERT INTO owner_pet(owner_id, pet_id) VALUES(2,4);
