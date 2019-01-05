@@ -51,35 +51,35 @@ public class Owner {
     @JsonManagedReference
     private Set<Pet> pets = new HashSet<>();
 
-    public final Long getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public final void setOwnerId(final Long ownerId) {
+    public void setOwnerId(final Long ownerId) {
         this.ownerId = ownerId;
     }
 
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public final Date getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public final void setCreatedDate(final Date createdDate) {
+    public void setCreatedDate(final Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public final Set<Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public final void setPets(final Set<Pet> pets) {
+    public void setPets(final Set<Pet> pets) {
         this.pets = pets;
     }
 
@@ -88,7 +88,7 @@ public class Owner {
      * @param petName
      * @return Optional pet details.
      */
-    public final Optional<Pet> getPetByName(final String petName) {
+    public Optional<Pet> getPetByName(final String petName) {
         return pets.stream().filter(p -> p.getName().equals(petName)).findAny();
     }
 }

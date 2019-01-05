@@ -58,51 +58,51 @@ public class Pet {
     @JsonBackReference
     private Set<Owner> owners = new HashSet<>();
 
-    public final Long getPetId() {
+    public Long getPetId() {
         return petId;
     }
 
-    public final void setPetId(final Long id) {
+    public void setPetId(final Long id) {
         this.petId = id;
     }
 
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public final PetType getPetType() {
+    public PetType getPetType() {
         return petType;
     }
 
-    public final void setPetType(final PetType petType) {
+    public void setPetType(final PetType petType) {
         this.petType = petType;
     }
 
-    public final Date getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public final void setCreatedDate(final Date createdDate) {
+    public void setCreatedDate(final Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public final Set<Owner> getOwners() {
+    public Set<Owner> getOwners() {
         return owners;
     }
 
-    public final void setOwners(final Set<Owner> owners) {
+    public void setOwners(final Set<Owner> owners) {
         this.owners = owners;
     }
 
-    public final String getFood() {
+    public String getFood() {
         return food;
     }
 
-    public final void setFood(final PetFood food) {
+    public void setFood(final PetFood food) {
         this.food = food.getFood();
     }
 }
