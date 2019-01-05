@@ -16,3 +16,13 @@ spring:
     change-log: classpath:/liquibase/db.changelog-master.xml
     check-change-log-location: true
     drop-first: true
+logging:
+  level:
+    ROOT: ERROR
+    org:
+      springframework: ERROR
+      hibernate: ERROR
+    com:
+      petrego: ERROR
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
