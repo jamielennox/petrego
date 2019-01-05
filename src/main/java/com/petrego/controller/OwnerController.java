@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+// TODO Add Basic AUTH to access
+
 @RestController
 public class OwnerController {
 
@@ -36,6 +38,8 @@ public class OwnerController {
         try {
             Owner owner = ownerControllerService.getOwner(ownerId);
             owner.add(linkTo(methodOn(this.getClass()).getOwnerPets(ownerId)).withSelfRel());
+
+            // TODO Add PetController with GET so that Owner response can contain HATEOAS link for each Pet.
 
             return ResponseEntity.status(MessageCode.OK.getCode()).body(owner);
         } catch (PetRegoException exception) {
