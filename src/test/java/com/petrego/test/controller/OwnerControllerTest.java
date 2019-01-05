@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OwnerControllerTest {
 
     private static final String TESTNAME = "Test Name";
+    private static final String REQUEST = "/v1/owners/1";
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,6 +39,7 @@ public class OwnerControllerTest {
 
     @Test
     public void givenOwner_wheGetOwnerPets_thenOwnerPetsListed() throws Exception {
+        // Given owner with pet dog
         Owner owner = new Owner();
         owner.setName(TESTNAME);
 
@@ -50,10 +52,14 @@ public class OwnerControllerTest {
 
         owner.setPets(pets);
 
+        // When requesting owner's pets
         when(ownerControllerService.getOwner(anyLong())).thenReturn(owner);
 
-        MvcResult result = this.mockMvc.perform(get("/v1/owners/1"))
+        // Then expect owner details returned as JSON
+        MvcResult result = this.mockMvc.perform(get(REQUEST))
                 .andDo(print())
                 .andExpect(status().is(MessageCode.OK.getCode())).andReturn();
+        // and response is HATEOAS
+        result.getResponse().getContentAsString().contains(REQUEST);
     }
 }
