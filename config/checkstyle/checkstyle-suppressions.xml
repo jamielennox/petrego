@@ -56,4 +56,7 @@
     
     <!-- Javascript suppression -->
     <suppress files=".*\.js" checks=".*" />
+
+    <!-- @Entity suppression -->
+    <suppress files=".*/src/main/java/.*/dao/.*\.java" checks="DesignForExtension" />
 </suppressions>

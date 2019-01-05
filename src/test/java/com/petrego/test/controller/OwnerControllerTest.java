@@ -6,6 +6,7 @@ import com.petrego.dao.Owner;
 import com.petrego.dao.Pet;
 import com.petrego.domain.MessageCode;
 import com.petrego.domain.PetType;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,20 +39,27 @@ public class OwnerControllerTest {
     @MockBean
     private OwnerControllerService ownerControllerService;
 
-    @Test
-    public void givenOwner_wheGetOwnerPets_thenOwnerPetsListed() throws Exception {
-        // Given owner with pet dog
-        Owner owner = new Owner();
+    private Owner owner;
+    private Pet pet;
+    private Set<Pet> ownerPets;
+
+    @Before
+    public void setupTest() {
+        owner = new Owner();
         owner.setName(TESTNAME);
 
-        Pet pet = new Pet();
+        pet = new Pet();
         pet.setName(TESTNAME);
         pet.setPetType(PetType.dog);
 
-        Set<Pet> pets = new HashSet<>();
-        pets.add(pet);
+        ownerPets = new HashSet<>();
+        ownerPets.add(pet);
+    }
 
-        owner.setPets(pets);
+    @Test
+    public void givenOwner_wheGetOwnerPets_thenOwnerPetsListed() throws Exception {
+        // Given owner with pet dog
+        owner.setPets(ownerPets);
 
         // When requesting owner's pets
         when(ownerControllerService.getOwner(anyLong())).thenReturn(owner);
@@ -60,6 +69,27 @@ public class OwnerControllerTest {
                 .andDo(print())
                 .andExpect(status().is(MessageCode.OK.getCode())).andReturn();
         // and response is HATEOAS
-        result.getResponse().getContentAsString().contains(REQUEST);
+        assertTrue(result.getResponse().getContentAsString().contains(REQUEST));
+        // and response does not contain food
+        assertTrue(!result.getResponse().getContentAsString().contains("food"));
+    }
+
+    @Test
+    public void givenv2_whenGetOwnerPets_thenOwnerPetsListedWithFood() throws Exception {
+        // Given v2 request
+        owner.setPets(ownerPets);
+        final String v2Request = "/v2/owners/1";
+
+        // When requesting owner's pets
+        when(ownerControllerService.getOwner(anyLong())).thenReturn(owner);
+
+        // Then expect owner details returned as JSON
+        MvcResult result = this.mockMvc.perform(get(v2Request))
+                .andDo(print())
+                .andExpect(status().is(MessageCode.OK.getCode())).andReturn();
+        // and response has food information
+        assertTrue(result.getResponse().getContentAsString().contains("\"food\":\"bone\""));
+        // and response HATEOAS link is v2
+        assertTrue(result.getResponse().getContentAsString().contains(v2Request));
     }
 }

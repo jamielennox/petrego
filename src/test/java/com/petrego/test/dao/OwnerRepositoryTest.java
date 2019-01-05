@@ -13,7 +13,6 @@ public class OwnerRepositoryTest extends JpaTestBase {
 
     private static final String NAME = "Test Owner";
     private static final String JOHN_DOE = "John Doe";
-    private static final String JD_PET_NAME = "Penny";
 
     @Autowired
     private OwnerRepository ownerRepository;
@@ -29,8 +28,7 @@ public class OwnerRepositoryTest extends JpaTestBase {
         // Then owner John Doe is returned and has a pet chicken named
         assertNotNull(owner);
         assertEquals(JOHN_DOE, owner.getName());
-        assertTrue(owner.getPets().size() > 0);
-        assertEquals(JD_PET_NAME, owner.getPetByName(JD_PET_NAME).get().getName());
+        assertTrue(owner.getPets().size() > 1);
     }
 
     @Test
